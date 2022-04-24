@@ -69,3 +69,16 @@ main {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
  }
+
+ .startGame {
+   margin-bottom: 15px;
+ }
+
+ .startGame-btn {
+  width: 120px;
+  padding: 5px;
+  margin: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: lightgreen;
+}

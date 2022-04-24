@@ -30,3 +30,38 @@
     justify-content: center;
     align-items: center;
 }
+
+h3 {
+    align-items: center;
+    text-align: center;
+}
+
+.btn-Me, .btn-Comp, .btn-OK {
+    width: 80px;
+    padding: 5px;
+    margin: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.btn-Me {
+    background-color: #78DFF4;
+}
+
+.btn-Comp {
+    background-color: #F28E69;
+}
+
+.winner-name {
+    font-size: large;
+    font-weight: bolder;
+}
+
+.poptext {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.errorPop {
+    text-align: center;
+}

@@ -24,5 +24,5 @@ export function Spot(props) {
         'blueBG': playerOne,
         'redBG': computer,
         'whiteBG': noPlay
-    })}>{id}</div>
+    })}></div>
 }

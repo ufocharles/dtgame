@@ -16,16 +16,13 @@ export const getGridArray = (gridSize) => {
         columnObject.Spots = spotArray
         ret.push(columnObject)
     }
-    console.log({ ret })
     return ret
 }
 export function UpdateBoardClick(btnId, player, boardArray) {
     const cloneBoardarray = _.clone(boardArray)
     _.forEach(cloneBoardarray, (a) => {
         if (a.Name === `Col${btnId}`) {
-            console.log('im here')
             for (var b = a.Spots.length - 1; b > -1; b--) {
-                console.log(b)
                 if (a.Spots[b].PlayerType === '') {
                     a.Spots[b].PlayerType = player
                     break
@@ -59,7 +56,6 @@ export const CheckForWinner = (boardArray, gridSize) => {
                     player.push(c.Spots[b].PlayerType)
                 }
             }
-            console.log({ row: player })
             if (player.length === boardArray.length && player.every((val, i, arr) => val === arr[0])) {
                 foundWinner = player[0]
                 break
@@ -75,7 +71,6 @@ export const CheckForWinner = (boardArray, gridSize) => {
                 player.push(boardArray[d].Spots[d].PlayerType)
             }
         }
-        console.log({ top: player })
         if (player.length === boardArray.length && player.every((val, i, arr) => val === arr[0])) {
             foundWinner = player[0]
         }
@@ -95,10 +90,5 @@ export const CheckForWinner = (boardArray, gridSize) => {
             foundWinner = player[0]
         }
 }
-    console.log({ foundWinner })
     return foundWinner
-}
-
-export const CheckAllSpotsFilled = () => {
-
 }

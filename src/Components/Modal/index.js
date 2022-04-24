@@ -1,0 +1,5 @@
+export * from './Popup'
+export * from './WinnerPop'
+export * from './StartGamePop'
+export * from './DrawPop'
+export * from './ErrorPop'
