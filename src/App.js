@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import './App.css';
 import { GameBoard } from './Components/GameBoard'
 import { ChoiceRow } from './Components/ChoiceRow'
+import Popup from './Components/Modal/Popup';
+import StartGamePop from './Components/Modal/StartGamePop';
 import _ from 'lodash';
 import { getComputerPlay } from './Data/datahelpers'
 import { UpdateBoardClick, CheckForWinner, getGridArray } from './Components/Shared'
@@ -12,6 +14,8 @@ function App(props) {
   const [boardArray, setBoardArray] = useState([])
   const [moveArray, setMoveArray] = useState([])
   const [allowPlayerClick, setAllowPlayerClick] = useState(true)
+  const [gameOn, setGameOn] = useState(false)
+  const [openStartGame, setOpenStartGame] = useState(false)
   const [nextPlayer, setNextPlayer] = useState('')
 
   useEffect(() => {
@@ -19,7 +23,7 @@ function App(props) {
     setBoardArray(ret)
   }, [])
 
-  async function userClick(btnId, player) {
+  function userClick(btnId, player) {
     const cloneMoveArray = _.clone(moveArray)
     let updatedBoardArray = UpdateBoardClick(btnId, player, boardArray)
     cloneMoveArray.push(btnId)
@@ -41,14 +45,29 @@ function App(props) {
 
     setBoardArray(updatedBoardArray)
   }
+
+  function startGame() {
+    // set game status to on
+    setGameOn(true)
+    // open modal for who starts the game
+    setOpenStartGame(true)
+  }
+  
+  function CloseModal () {
+    setOpenStartGame(false)
+  }
   return (
     <>
-      <div><h2>Are you Ready To Play?</h2></div>
-      <div className='backgroundContainer'>
-        <ChoiceRow gridSize={gridSize} userClick={userClick} allowPlayerClick={allowPlayerClick} />
-        <GameBoard GridData={boardArray} gridSize={gridSize} />
-      </div>
-
+      <main>
+        <div>
+          <button onClick={() => { startGame() }}>Start Game</button>
+        </div>
+        <div className='backgroundContainer'>
+          <ChoiceRow gridSize={gridSize} userClick={userClick} allowPlayerClick={allowPlayerClick} />
+          <GameBoard GridData={boardArray} gridSize={gridSize} />
+        </div>
+      </main>
+      <StartGamePop trigger={openStartGame} />
     </>
   );
 }

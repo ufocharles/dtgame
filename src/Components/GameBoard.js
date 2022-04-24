@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import { Column } from './Column'
-import clsx from 'clsx'
 
 export function GameBoard(props) {
     const { GridData, gridSize } = props

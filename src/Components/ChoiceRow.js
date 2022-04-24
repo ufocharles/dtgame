@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import { ChoiceSpot } from './ChoiceSpot'
-import clsx from 'clsx'
 
 export function ChoiceRow (props) {
     const { gridSize, userClick, allowPlayerClick } = props
