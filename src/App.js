@@ -7,7 +7,7 @@ import _ from 'lodash';
 import { getComputerPlay } from './Data/datahelpers'
 import { UpdateBoardClick, CheckForWinner, getGridArray } from './Components/Shared'
 
-function App(props) {
+function App() {
   const gridSize = 4
 
   const [boardArray, setBoardArray] = useState([])
@@ -102,8 +102,6 @@ function App(props) {
     setWinnerFound(false)
   }
 
-  console.log(gameOn)
-
   return (
     <>
       <main>
@@ -118,7 +116,6 @@ function App(props) {
             <ChoiceRow gridSize={gridSize} userClick={userClick} allowPlayerClick={allowPlayerClick} />
             : null
           }
-
           <GameBoard GridData={boardArray} gridSize={gridSize} />
         </div>
       </main>

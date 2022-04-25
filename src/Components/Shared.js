@@ -34,7 +34,6 @@ export function UpdateBoardClick(btnId, player, boardArray) {
 }
 
 export const CheckForWinner = (boardArray, gridSize) => {
-    console.log({ boardArray })
     // test each column for equality
     let foundWinner
     for (var column of boardArray) {
@@ -85,7 +84,6 @@ export const CheckForWinner = (boardArray, gridSize) => {
                 player.push(boardArray[f].Spots[boardArray.length - 1 - f].PlayerType)
             }
         }
-        console.log({ bottom: player })
         if (player.length === boardArray.length && player.every((val, i, arr) => val === arr[0])) {
             foundWinner = player[0]
         }
