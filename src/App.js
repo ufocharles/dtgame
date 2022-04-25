@@ -85,7 +85,14 @@ function App() {
           const cloneMovearray = _.clone(moveArray)
           cloneMovearray.pop()
           setMoveArray(cloneMovearray)
-          setErrorMessage(err.Data)
+          // set the number of the column +1
+          const messageArray = err.Data.split(' ')
+          if (messageArray.length === 4) {
+            const errorColumn = parseInt(messageArray[1]) + 1
+            setErrorMessage(`Column ${errorColumn} is full. Select a differenct column`)
+          } else {
+            setErrorMessage(err.Data)
+          }
           setErrorExist(true)
         })
     }
