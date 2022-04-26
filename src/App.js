@@ -12,7 +12,6 @@ function App() {
 
   const [boardArray, setBoardArray] = useState([])
   const [moveArray, setMoveArray] = useState([])
-  const [allowPlayerClick, setAllowPlayerClick] = useState(false)
   const [gameOn, setGameOn] = useState(false)
   const [openStartGame, setOpenStartGame] = useState(false)
   const [nextPlayer, setNextPlayer] = useState('')
@@ -28,16 +27,8 @@ function App() {
   }, [])
 
   useEffect(() => {
-    switch (nextPlayer) {
-      case 'PlayerOne':
-        setAllowPlayerClick(true)
-        break;
-      case 'Computer':
-        getComputerMove()
-        break
-      default:
-        break;
-    }
+    if (nextPlayer === 'Computer') {
+      getComputerMove()    }
     // eslint-disable-next-line
   }, [nextPlayer])
 
@@ -97,7 +88,6 @@ function App() {
         })
     }
     setNextPlayer('PlayerOne')
-
   }
   function startGame() {
     // open modal for who starts the game
@@ -120,7 +110,7 @@ function App() {
         </div>
         <div className='backgroundContainer'>
           {gameOn ?
-            <ChoiceRow gridSize={gridSize} userClick={userClick} allowPlayerClick={allowPlayerClick} />
+            <ChoiceRow gridSize={gridSize} userClick={userClick} nextPlayer={nextPlayer} />
             : null
           }
           <GameBoard GridData={boardArray} gridSize={gridSize} />
