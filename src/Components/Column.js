@@ -6,8 +6,12 @@ export function Column(props) {
     const eachColumn = _.map(columnData.Spots, (a, i) => {
         return <Spot key={i} SpotData={a} id={i} />
     })
+    const gridStyle = {}
+    gridStyle.display = 'grid'
+    gridStyle.gridTemplateColumns = `repeat(${columnData.length}, 1fr)`
+
     return (
-        <div className='backgroundBrown'>
+        <div className='backgroundBrown' style={gridStyle}>
             {eachColumn}
         </div>
     )

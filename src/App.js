@@ -28,21 +28,10 @@ function App() {
 
   useEffect(() => {
     if (nextPlayer === 'Computer') {
-      getComputerMove()    }
+      getComputerMove()
+    }
     // eslint-disable-next-line
   }, [nextPlayer])
-
-  useEffect(() => {
-    if (winner) {
-      setGameOn(false)
-      setNextPlayer('')
-    }
-    if (moveArray.length === (gridSize * gridSize) && !winner) {
-      setDrawGame(true)
-      setGameOn(false)
-      setNextPlayer('')
-    }
-  }, [winner, moveArray])
 
   function userClick(btnId, player) {
     const cloneMoveArray = _.clone(moveArray)
@@ -53,13 +42,16 @@ function App() {
     if (foundWinner) {
       setWinner(foundWinner)
       setWinnerFound(true)
+      setGameOn(false)
+      setNextPlayer('')
+      setBoardArray(updatedBoardArray)
+    } else {
+      setNextPlayer('Computer')
     }
-    setBoardArray(updatedBoardArray)
-    setNextPlayer('Computer')
   }
 
   function getComputerMove() {
-    if (!winner && moveArray.length !== (gridSize * gridSize)) {
+    if (!winner) {
       getComputerPlay(moveArray)
         .then(data => {
           const compPlay = data.Data[data.Data.length - 1]
@@ -67,27 +59,38 @@ function App() {
           setMoveArray(data.Data)
           setBoardArray(updatedBoardArray)
           const foundWinner = CheckForWinner(updatedBoardArray)
+          // check for winner
+          // if comp plays last and no winner then draw
           if (foundWinner) {
             setWinner(foundWinner)
             setWinnerFound(true)
+            setGameOn(false)
+            setNextPlayer('')
+          } else if (!foundWinner && data.Data.length === (gridSize * gridSize)) {
+            setDrawGame(true)
+            setGameOn(false)
+            setNextPlayer('')
+          } else {
+            setNextPlayer('PlayerOne')
           }
         }).catch((err) => {
           console.log({ err })
-          const cloneMovearray = _.clone(moveArray)
-          cloneMovearray.pop()
-          setMoveArray(cloneMovearray)
-          // set the number of the column +1
-          const messageArray = err.Data.split(' ')
-          if (messageArray.length === 4) {
-            const errorColumn = parseInt(messageArray[1]) + 1
-            setErrorMessage(`Column ${errorColumn} is full. Select a differenct column`)
+          // if no moves left then this ends in draw
+          // else pop the last value and player one plays again
+          if (err.Data === 'No moves left') {
+            setDrawGame(true)
+            setGameOn(false)
+            setNextPlayer('')
           } else {
+            const cloneMovearray = _.clone(moveArray)
+            cloneMovearray.pop()
+            setMoveArray(cloneMovearray)
             setErrorMessage(err.Data)
+            setErrorExist(true)
+            setNextPlayer('PlayerOne')
           }
-          setErrorExist(true)
         })
     }
-    setNextPlayer('PlayerOne')
   }
   function startGame() {
     // open modal for who starts the game
@@ -118,7 +121,7 @@ function App() {
       </main>
       <StartGamePop trigger={openStartGame} setTrigger={setOpenStartGame} setFirstPlayer={setNextPlayer} setGameOn={setGameOn} />
       <WinnerPop trigger={winnerFound} setTrigger={setWinnerFound} winner={winner} />
-      <DrawPop trigger={drawGame} setTrigger={setDrawGame}/>
+      <DrawPop trigger={drawGame} setTrigger={setDrawGame} />
       <ErrorPop trigger={errorExist} setTrigger={setErrorExist} errorMessage={errorMessage} />
     </>
   );
